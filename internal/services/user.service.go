@@ -25,14 +25,22 @@ type UserService struct {
 }
 
 func (userService *UserService) AddUser(user dto.RegisterDTO) error{
+	_, err := userService.repo.GetUserByEmail(user.Email)
+	if err != nil {
+		return errors.New("Email already exists")
+	}
+	_, err = userService.repo.GetUserByUsername(user.Email)
+	if err != nil {
+		return errors.New("Username already exists")
+	}
 	userModel := &models.User{
 		Firstname: user.Firstname,
-		Lastname: user.Lastname,
-		Username: user.Username,
-		Email: user.Email,
-		Password: password.HashPassword(user.Password),
+		Lastname:  user.Lastname,
+		Username:  user.Username,
+		Email:     user.Email,
+		Password:  password.HashPassword(user.Password),
 	}
-	err := userService.repo.CreateUser(userModel)
+	err = userService.repo.CreateUser(userModel)
 	if err != nil{
 		return err
 	}

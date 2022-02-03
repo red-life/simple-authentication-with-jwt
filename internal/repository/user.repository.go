@@ -9,6 +9,7 @@ type IUserRepository interface {
 	CreateUser(user *models.User) error
 	GetUserByID(id int) (*models.User, error)
 	GetUserByEmail(email string) (*models.User, error)
+	GetUserByUsername(username string) (*models.User, error)
 	DeleteUser(id int) error
 }
 
@@ -20,6 +21,15 @@ func NewUserRepository(dbConn *gorm.DB) IUserRepository {
 
 type UserRepository struct {
 	db *gorm.DB
+}
+
+func (userRepo *UserRepository) GetUserByUsername(username string) (*models.User, error) {
+	var user models.User
+	result := userRepo.db.Where("username = ?", username).Take(&user)
+	if result.Error != nil{
+		return nil,result.Error
+	}
+	return &user,nil
 }
 
 func (userRepo *UserRepository) CreateUser(user *models.User) error {
