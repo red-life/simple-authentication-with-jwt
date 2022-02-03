@@ -17,10 +17,13 @@ type UserService struct {
 }
 
 func (userService *UserService) AddUser(user *models.User) error{
-
+	
 }
 
 func (userService UserService) Login(user *dto.LoginDTO) error{
 
 }
 
+func (userService UserService) DeleteUser(id int) error{
+
+}
