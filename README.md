@@ -9,11 +9,11 @@ A simple authentication web app in Go (using JWT)
 
 ## Install Dependencies
 ```go get -u github.com/dgrijalva/jwt-go
-go get -u github.com/gin-gonic/gin v1.7.7
-go get -u github.com/go-playground/validator/v10 v10.10.0
-go get -u gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
-go get -u gorm.io/driver/postgres v1.2.3
-go get -u gorm.io/gorm v1.22.5
+go get -u github.com/gin-gonic/gin
+go get -u github.com/go-playground/validator/v10
+go get -u gopkg.in/yaml.v3
+go get -u gorm.io/driver/postgres
+go get -u gorm.io/gorm
 ```
 
 ## Usage
