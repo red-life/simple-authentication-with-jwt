@@ -1,9 +1,9 @@
 package config
 
 type PostgresConfig struct {
-	host     string `yaml:"host"`
-	port     int    `yaml:"port"`
-	db       string `yaml:"db"`
-	username string `yaml:"username"`
-	password string `yaml:"password"`
+	Host     string `yaml:"host"`
+	Port     int    `yaml:"port"`
+	DB       string `yaml:"db"`
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
 }
