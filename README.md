@@ -20,7 +20,7 @@ go get -u gorm.io/gorm
 Put your postgres connection details in **config.yaml**<br>
 Run this command below:
 ```
-go run ./cmd/serve.go
+go run
 ```
 
 ## License
