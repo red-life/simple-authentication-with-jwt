@@ -9,7 +9,7 @@ import (
 )
 
 type IUserService interface {
-	AddUser(user *models.User) error
+	AddUser(user dto.RegisterDTO) error
 	Login(user dto.LoginDTO) error
 	DeleteUser(id int) error
 }
@@ -24,8 +24,15 @@ type UserService struct {
 	repo repository.IUserRepository
 }
 
-func (userService *UserService) AddUser(user *models.User) error{
-	err := userService.repo.CreateUser(user)
+func (userService *UserService) AddUser(user dto.RegisterDTO) error{
+	userModel := &models.User{
+		Firstname: user.Firstname,
+		Lastname: user.Lastname,
+		Username: user.Username,
+		Email: user.Email,
+		Password: user.Password,
+	}
+	err := userService.repo.CreateUser(userModel)
 	if err != nil{
 		return err
 	}

@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"gorm.io/gorm"
 	"github.com/red-life/simple-authentication-with-jwt/internal/entity/models"
+	"gorm.io/gorm"
 )
 
 type IUserRepository interface {
