@@ -8,7 +8,8 @@ A simple authentication web app in Go (using JWT)
 | /api/v1/login   | Login Router        |
 
 ## Install Dependencies
-```go get -u github.com/dgrijalva/jwt-go
+```
+go get -u github.com/dgrijalva/jwt-go
 go get -u github.com/gin-gonic/gin
 go get -u github.com/go-playground/validator/v10
 go get -u gopkg.in/yaml.v3
