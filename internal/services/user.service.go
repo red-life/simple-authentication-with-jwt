@@ -30,7 +30,7 @@ func (userService *UserService) AddUser(user dto.RegisterDTO) error{
 		Lastname: user.Lastname,
 		Username: user.Username,
 		Email: user.Email,
-		Password: user.Password,
+		Password: password.HashPassword(user.Password),
 	}
 	err := userService.repo.CreateUser(userModel)
 	if err != nil{

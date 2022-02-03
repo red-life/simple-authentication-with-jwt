@@ -2,4 +2,4 @@ host: localhost
 port: 5432
 db: postgres
 username: postgres
-password: 
+password: 12345

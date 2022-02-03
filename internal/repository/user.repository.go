@@ -23,7 +23,7 @@ type UserRepository struct {
 }
 
 func (userRepo *UserRepository) CreateUser(user *models.User) error {
-	result := userRepo.db.Create(&user)
+	result := userRepo.db.Create(user)
 	if result.Error != nil{
 		return result.Error
 	}

@@ -1,8 +1,13 @@
 package password
 
-import "crypto/sha256"
+import (
+	"crypto/sha256"
+	"encoding/base64"
+)
 
 func HashPassword(password string) string{
-	hash := sha256.Sum256([]byte(password))
-	return string(hash[:])
+	hasher := sha256.New()
+	hasher.Write([]byte(password))
+	sha := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+	return sha
 }

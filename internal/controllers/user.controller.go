@@ -26,16 +26,16 @@ type UserController struct {
 	jwt jwt.IJWTPackage
 }
 
-var validate *validator.Validate
 
 func (userController UserController)AddUser(c *gin.Context){
 	var registerDto dto.RegisterDTO
-	err := validate.Struct(registerDto)
-	if err != nil{
+	if err := c.ShouldBindJSON(&registerDto); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if err = c.ShouldBindJSON(&registerDto); err != nil{
+	validate := validator.New()
+	err := validate.Struct(registerDto)
+	if err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -49,18 +49,18 @@ func (userController UserController)AddUser(c *gin.Context){
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.SetCookie("token",jwtToken,15000,"/","localhost",true,true)
-	c.JSON(http.StatusBadRequest, gin.H{"message": "User successfully added"})
+	c.JSON(http.StatusOK, gin.H{"message": "User successfully added","access_token":jwtToken})
 }
 
 func (userController UserController)Login(c *gin.Context){
 	var loginDto dto.LoginDTO
-	err := validate.Struct(loginDto)
-	if err != nil{
+	if err := c.ShouldBindJSON(&loginDto); err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if err = c.ShouldBindJSON(&loginDto); err != nil{
+	validate := validator.New()
+	err := validate.Struct(loginDto)
+	if err != nil{
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -74,6 +74,5 @@ func (userController UserController)Login(c *gin.Context){
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.SetCookie("token",jwtToken,15000,"/","localhost",true,true)
-	c.JSON(http.StatusBadRequest, gin.H{"message": "Logged in successfully"})
+	c.JSON(http.StatusOK, gin.H{"message": "Logged in successfully","access_token":jwtToken})
 }
