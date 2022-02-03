@@ -8,7 +8,7 @@ import (
 
 type IJWTPackage interface {
 	CreateToken(email string)  (string,error)
-	ValidateToken(token string) error
+	ValidateToken(token string) (string, error)
 }
 
 func NewJWTPackage(SecretKey string) IJWTPackage{
@@ -36,7 +36,7 @@ func (J JWTService) CreateToken(email string) (string, error) {
 	return signedToken, nil
 }
 
-func (J JWTService) ValidateToken(accessToken string) error {
+func (J JWTService) ValidateToken(accessToken string) (string, error) {
 	token, err := jwt.Parse(accessToken, func(token *jwt.Token) (interface{}, error) {
 		_, ok := token.Method.(*jwt.SigningMethodHMAC)
 		if !ok {
@@ -46,15 +46,15 @@ func (J JWTService) ValidateToken(accessToken string) error {
 		return []byte(J.SecretKey), nil
 	})
 	if err != nil {
-		return err
+		return "",err
 	}
 
-	_, ok := token.Claims.(jwt.MapClaims)
+	payload, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
-		return nil
+		return payload["email"].(string), nil
 	}
 
-	return errors.New("invalid token")
+	return "",errors.New("invalid token")
 }
 
 

@@ -12,6 +12,7 @@ import (
 type IUserController interface {
 	AddUser(c *gin.Context)
 	Login(c *gin.Context)
+	DeleteUser(C *gin.Context)
 }
 
 func NewUserController(userService service.IUserService, jwt jwt.IJWTPackage) IUserController{
@@ -75,4 +76,18 @@ func (userController UserController)Login(c *gin.Context){
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Logged in successfully","access_token":jwtToken})
+}
+
+func (userController UserController)DeleteUser(c *gin.Context){
+	email, ok := c.Get("Email")
+	if !ok{
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Missing email in token"})
+		return
+	}
+	err := userController.userService.DeleteUser(email.(string))
+	if err != nil{
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "User successfully deleted"})
 }

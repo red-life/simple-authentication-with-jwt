@@ -5,6 +5,7 @@ import (
 	"github.com/red-life/simple-authentication-with-jwt/internal/config"
 	"github.com/red-life/simple-authentication-with-jwt/internal/controllers"
 	"github.com/red-life/simple-authentication-with-jwt/internal/entity/models"
+	"github.com/red-life/simple-authentication-with-jwt/internal/middleware"
 	"github.com/red-life/simple-authentication-with-jwt/internal/repository"
 	"github.com/red-life/simple-authentication-with-jwt/internal/services"
 	"github.com/red-life/simple-authentication-with-jwt/pkg/jwt"
@@ -33,6 +34,7 @@ func InitRouter() *gin.Engine{
 	{
 		auth.POST("/register",userController.AddUser)
 		auth.POST("/login",userController.Login)
+		auth.GET("/delete",middleware.IsAuthorized(jwtAuth),userController.DeleteUser)
 	}
 	/*
 	user := v1.Group("/user", middleware.isAuthorized())

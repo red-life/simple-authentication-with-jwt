@@ -11,7 +11,7 @@ import (
 type IUserService interface {
 	AddUser(user dto.RegisterDTO) error
 	Login(user dto.LoginDTO) error
-	DeleteUser(id int) error
+	DeleteUser(email string) error
 }
 
 func NewUserService(userRepo repository.IUserRepository) IUserService{
@@ -26,11 +26,11 @@ type UserService struct {
 
 func (userService *UserService) AddUser(user dto.RegisterDTO) error{
 	_, err := userService.repo.GetUserByEmail(user.Email)
-	if err != nil {
+	if err == nil {
 		return errors.New("Email already exists")
 	}
 	_, err = userService.repo.GetUserByUsername(user.Email)
-	if err != nil {
+	if err == nil {
 		return errors.New("Username already exists")
 	}
 	userModel := &models.User{
@@ -60,8 +60,13 @@ func (userService UserService) Login(user dto.LoginDTO) error{
 
 }
 
-func (userService UserService) DeleteUser(id int) error{
-	err := userService.repo.DeleteUser(id)
+func (userService UserService) DeleteUser(email string) error{
+	user, err := userService.repo.GetUserByEmail(email)
+	if err != nil{
+		return err
+	}
+	userID := user.ID
+	err = userService.repo.DeleteUser(userID)
 	if err != nil{
 		return err
 	}
