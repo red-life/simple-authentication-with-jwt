@@ -14,6 +14,12 @@ type IUserService interface {
 	DeleteUser(id int) error
 }
 
+func NewUserService(userRepo repository.IUserRepository) IUserService{
+	return &UserService{
+		repo: userRepo,
+	}
+}
+
 type UserService struct {
 	repo repository.IUserRepository
 }
