@@ -1,12 +1,12 @@
 package cmd
 
 import (
-	"github.com/red-life/simple-authentication-with-jwt/internal/router"
+	"github.com/red-life/simple-authentication-with-jwt/internal/routes"
 )
 
 func main() {
-	r := router.NewRouter()
-	if err := r.Run(); err != nil {
+	r := router.InitRouter()
+	if err := r.Run(":5000"); err != nil {
 		panic(err)
 	}
 }
