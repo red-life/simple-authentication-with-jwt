@@ -14,6 +14,13 @@ type IUserController interface {
 	Login(c *gin.Context)
 }
 
+func NewUserController(userService service.IUserService, jwt jwt.IJWTPackage) IUserController{
+	return &UserController{
+		userService: userService,
+		jwt: jwt,
+	}
+}
+
 type UserController struct {
 	userService service.IUserService
 	jwt jwt.IJWTPackage
