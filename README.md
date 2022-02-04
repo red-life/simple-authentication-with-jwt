@@ -2,11 +2,11 @@
 A simple authentication web app in Go (using JWT)
 
 ## Routes
-| Path        | Description |
-| ----------- | ----------- |
-| /api/v1/register      | Signup Router       |
-| /api/v1/login   | Login Router        |
-
+| Path                   | Method      | Data      |
+| ---------------------- | ----------- | --------- |
+| /api/v1/auth/register  |    POST     | {"firstname":,"firstname":,"email":,"username":,"password":} |
+| /api/v1/auth/login     |    POST     | {"email":,"password":} |
+| /apiv1/auth/delete     |    GET      | None |
 ## Install Dependencies
 ```
 go get -u github.com/dgrijalva/jwt-go
